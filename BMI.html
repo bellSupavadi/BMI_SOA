@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BMI</title>
+
+</head>
+
+</script>
+
+<body>
+
+         <div class="box" style="width:400px; height:300px;border:solid;display:table;text-align:center;">
+         <h1>BMI Calculator</h1>
+         <p>Heigh:
+                <input type="text" id="height">(height in centimeters)
+                <br>
+            </p>
+
+            <p> Weight:
+                <input type="text" id="weight">(weight in kilograms)
+            </p>
+
+                    <button type="submit" onclick="cal()">Callculate BMI</button>
+
+                    <div id="show"></div>
+             </div>
+          
+  <script>
+    function cal(){
+       
+        var xmlHttp = new XMLHttpRequest();
+       var url="http://mrz.freetzi.com/calculate-bmi.php";
+      
+      xmlHttp.open("POST",url,false);
+     xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+     
+     var height = $('#height').val();
+     var weight = $('#weight').val();
+     var data = '{"ht":"'+height+'","wt":"'+weight+'"}';
+
+       xmlHttp.send("input="+data);
+      console.log(data);
+      
+       if (xmlHttp.readyState == 4 && xmlHttp.status==200)
+       {
+           var result = xmlHttp.responseText;
+         var jsResult = JSON.parse(result);
+         var bmi = jsResult.bmi;
+         var message =jsResult.message;
+      
+       document.getElementById("show").innerHTML="BMI is" + bmi+" "+message;
+        
+    }
+
+    }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+</body>
+
+</html>
